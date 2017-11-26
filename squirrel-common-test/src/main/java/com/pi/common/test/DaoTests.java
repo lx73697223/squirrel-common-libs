@@ -1,6 +1,6 @@
 package com.pi.common.test;
 
-import com.pi.common.utils.exceptions.PiPiRuntimeException;
+import com.pi.common.utils.exceptions.PiRuntimeException;
 import com.pi.common.utils.spring.Profiles;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +20,8 @@ public abstract class DaoTests extends AbstractTransactionalTestNGSpringContextT
         try {
             daoFunction.get();
         } catch (MyBatisSystemException e) {
-            if (e.getMostSpecificCause() instanceof PiPiRuntimeException) {
-                PiPiRuntimeException ex = (PiPiRuntimeException) e.getMostSpecificCause();
+            if (e.getMostSpecificCause() instanceof PiRuntimeException) {
+                PiRuntimeException ex = (PiRuntimeException) e.getMostSpecificCause();
                 assertThat(ex.getStatus()).isEqualTo(HttpStatus.CONFLICT);
             } else {
                 throw e;
