@@ -1,5 +1,6 @@
 package com.pi.common.autoconfigure.spring.validation;
 
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
@@ -12,12 +13,8 @@ import javax.validation.Validator;
 @ConditionalOnClass(Validator.class)
 public class BeanValidationAutoConfiguration implements MessageSourceAware {
 
+    @Setter
     private MessageSource messageSource;
-
-    @Override
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 
     @Bean
     @ConditionalOnClass(MethodValidationPostProcessor.class)

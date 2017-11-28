@@ -1,9 +1,11 @@
 package com.pi.common.persistence.mybatis.autoconfigure;
 
+import lombok.Data;
 import org.apache.ibatis.session.ExecutorType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
 
+@Data
 @ConfigurationProperties(prefix = MybatisProperties.PREFIX)
 public class MybatisProperties {
 
@@ -42,7 +44,7 @@ public class MybatisProperties {
     /**
      Execution mode.
      */
-    private ExecutorType executorType;
+    private ExecutorType executorType = defaultExecutorType;
 
     /**
      Package to scan EnumEntities.
@@ -50,101 +52,5 @@ public class MybatisProperties {
     private String[] enumEntityPackages;
 
     private boolean paginationEnabled = true;
-
-    public boolean isCacheEnabled() {
-        return cacheEnabled;
-    }
-
-    public void setCacheEnabled(boolean cacheEnabled) {
-        this.cacheEnabled = cacheEnabled;
-    }
-
-    public boolean isUseGeneratedKeys() {
-        return useGeneratedKeys;
-    }
-
-    public void setUseGeneratedKeys(boolean useGeneratedKeys) {
-        this.useGeneratedKeys = useGeneratedKeys;
-    }
-
-    public ExecutorType getDefaultExecutorType() {
-        return defaultExecutorType;
-    }
-
-    public void setDefaultExecutorType(ExecutorType defaultExecutorType) {
-        this.defaultExecutorType = defaultExecutorType;
-    }
-
-    public boolean isMapUnderscoreToCamelCase() {
-        return mapUnderscoreToCamelCase;
-    }
-
-    public void setMapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
-        this.mapUnderscoreToCamelCase = mapUnderscoreToCamelCase;
-    }
-
-    public String getLogImpl() {
-        return logImpl;
-    }
-
-    public void setLogImpl(String logImpl) {
-        this.logImpl = logImpl;
-    }
-
-    public String getConfig() {
-        return this.config;
-    }
-
-    public void setConfig(String config) {
-        this.config = config;
-    }
-
-    public Resource[] getMapperLocations() {
-        return this.mapperLocations;
-    }
-
-    public void setMapperLocations(Resource[] mapperLocations) {
-        this.mapperLocations = mapperLocations;
-    }
-
-    public String[] getTypeHandlersPackages() {
-        return this.typeHandlersPackages;
-    }
-
-    public void setTypeHandlersPackages(String[] typeHandlersPackages) {
-        this.typeHandlersPackages = typeHandlersPackages;
-    }
-
-    public String[] getTypeAliasesPackages() {
-        return this.typeAliasesPackages;
-    }
-
-    public void setTypeAliasesPackages(String[] typeAliasesPackages) {
-        this.typeAliasesPackages = typeAliasesPackages;
-    }
-
-    public ExecutorType getExecutorType() {
-        return this.executorType == null ? getDefaultExecutorType() : this.executorType;
-    }
-
-    public void setExecutorType(ExecutorType executorType) {
-        this.executorType = executorType;
-    }
-
-    public String[] getEnumEntityPackages() {
-        return enumEntityPackages;
-    }
-
-    public void setEnumEntityPackages(String[] enumEntityPackages) {
-        this.enumEntityPackages = enumEntityPackages;
-    }
-
-    public boolean isPaginationEnabled() {
-        return paginationEnabled;
-    }
-
-    public void setPaginationEnabled(boolean paginationEnabled) {
-        this.paginationEnabled = paginationEnabled;
-    }
 
 }

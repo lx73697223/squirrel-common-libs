@@ -1,39 +1,25 @@
 package com.pi.common.utils.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+@Data
 public class BaseRangeEntity {
 
     /**
-     起始时间, UTC时间, 格式: 2017-03-10T00:00:00Z
+     起始时间, UTC时间, 格式: 2017-11-29T00:00:00Z
      */
     private String start;
 
     /**
-     终止时间, UTC时间, 格式: 2017-03-10T23:59:59Z
+     终止时间, UTC时间, 格式: 2017-11-29T23:59:59Z
      */
     private String end;
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
 
     @JsonIgnore
     public ZonedDateTime getStartTime() {

@@ -1,6 +1,7 @@
 package com.pi.common.autoconfigure.quartz;
 
 import com.pi.common.utils.spring.Profiles;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
@@ -28,11 +29,8 @@ public class QuartzAutoConfiguration {
 
     private ResourceLoader resourceLoader;
 
+    @Setter
     private boolean autoStartup = true;
-
-    public void setAutoStartup(boolean autoStartup) {
-        this.autoStartup = autoStartup;
-    }
 
     public QuartzAutoConfiguration(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;

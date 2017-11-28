@@ -1,8 +1,6 @@
 package com.pi.common.autoconfigure.swagger;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.base.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,9 +8,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-
-import com.google.common.base.Predicate;
-
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,6 +18,9 @@ import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EnableSwagger2
 @Configuration
@@ -42,7 +40,7 @@ public class SwaggerAutoConfiguration {
 
     protected Docket createDocket() {
         return createDocket(pathsRegex(properties.getRegexPath()), properties.getGroupName(), properties.getScanBasePackage(),
-                createApiInfo(), properties.getNeedToken(), properties.isEnable());
+                createApiInfo(), properties.getNeedToken(), properties.getEnable());
     }
 
     protected Docket createDocket(Predicate<String> pathsRegex, String groupName, String basePackage, ApiInfo apiInfo,
