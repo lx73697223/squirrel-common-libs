@@ -38,6 +38,13 @@
         </dependency>
         <!-- test end -->
 
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
         <!-- squirrel begin -->
         <dependency>
             <groupId>com.pipi</groupId>
