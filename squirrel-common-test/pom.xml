@@ -45,22 +45,23 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- squirrel begin -->
+        <!-- squirrel common begin -->
         <dependency>
             <groupId>com.pipi</groupId>
             <artifactId>squirrel-common-utils</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pipi</groupId>
             <artifactId>squirrel-common-jackson</artifactId>
-            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pipi</groupId>
+            <artifactId>squirrel-common-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>com.pipi</groupId>
             <artifactId>squirrel-common-persistence</artifactId>
-            <optional>true</optional>
         </dependency>
-        <!-- squirrel end -->
+        <!-- squirrel common end -->
     </dependencies>
 </project>

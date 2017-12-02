@@ -17,8 +17,8 @@
     <modules>
         <module>squirrel-common-utils</module>
         <module>squirrel-common-jackson</module>
-        <module>squirrel-common-persistence</module>
         <module>squirrel-common-autoconfigure</module>
+        <module>squirrel-common-persistence</module>
         <module>squirrel-common-test</module>
     </modules>
 

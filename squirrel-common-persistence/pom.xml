@@ -58,6 +58,11 @@
         </dependency>
         <dependency>
             <groupId>com.pipi</groupId>
+            <artifactId>squirrel-common-jackson</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pipi</groupId>
             <artifactId>squirrel-common-autoconfigure</artifactId>
             <optional>true</optional>
         </dependency>

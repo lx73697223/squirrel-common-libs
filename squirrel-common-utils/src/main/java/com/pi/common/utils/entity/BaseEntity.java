@@ -1,6 +1,5 @@
 package com.pi.common.utils.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,7 +16,6 @@ public class BaseEntity implements Serializable, LogicalDeletionEntity {
 
     private ZonedDateTime updatedTime;
 
-    @JsonIgnore
     private boolean deleted = false;
 
     @Override

@@ -1,11 +1,13 @@
 package com.pi.common.jackson.databind;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import org.springframework.boot.jackson.JsonComponent;
 
+import java.io.IOException;
+
+@JsonComponent
 public abstract class UrlCollectionJsonSerializer extends JsonSerializer<Iterable<String>> {
 
     /**

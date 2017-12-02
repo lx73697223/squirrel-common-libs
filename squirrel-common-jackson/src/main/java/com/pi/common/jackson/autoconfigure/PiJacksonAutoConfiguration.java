@@ -1,13 +1,15 @@
 package com.pi.common.jackson.autoconfigure;
 
 import com.ctc.wstx.stax.WstxOutputFactory;
-import com.pi.common.jackson.databind.EnumEntityDeserializer;
-import com.pi.common.jackson.databind.EnumEntitySerializer;
-import com.pi.common.jackson.databind.NamedEnumEntitySerializer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlFactory;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.pi.common.jackson.databind.EnumEntityJsonComponent;
 import com.pi.common.jackson.mapper.JacksonJsonMapper;
-import com.pi.common.utils.enums.EnumEntity;
 import com.pi.common.utils.enums.EnumEntityUtils;
-import com.pi.common.utils.enums.NamedEnumEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -19,18 +21,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlFactory;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
 @Configuration
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "jackson")
-public class JacksonAutoConfiguration {
+public class PiJacksonAutoConfiguration {
 
+    @Value("${jackson.enum-entity-packages}")
     private String[] enumEntityPackages;
 
     public void setEnumEntityPackages(String[] enumEntityPackages) {
@@ -38,15 +34,15 @@ public class JacksonAutoConfiguration {
     }
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer squirrelJackson2ObjectMapperBuilderCustomizer() {
+    public Jackson2ObjectMapperBuilderCustomizer piJackson2ObjectMapperBuilderCustomizer() {
         return builder -> {
-            builder.serializationInclusion(Include.NON_EMPTY).failOnUnknownProperties(false)
-                    .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                    .serializerByType(EnumEntity.class, new EnumEntitySerializer())
-                    .serializerByType(NamedEnumEntity.class, new NamedEnumEntitySerializer());
+            // serializer
+            builder.serializationInclusion(JsonInclude.Include.NON_EMPTY).failOnUnknownProperties(
+                    false).featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+            // deserializer
             EnumEntityUtils.scanEnumEntityPackages(type -> {
-                EnumEntityDeserializer deserializer = new EnumEntityDeserializer(type);
+                EnumEntityJsonComponent.Deserializer deserializer = new EnumEntityJsonComponent.Deserializer(type);
                 builder.deserializerByType(type, deserializer);
             }, enumEntityPackages);
         };
@@ -55,19 +51,6 @@ public class JacksonAutoConfiguration {
     @Bean
     public JacksonJsonMapper jsonMapper(ObjectMapper objectMapper) {
         return new JacksonJsonMapper(objectMapper);
-    }
-
-    @Bean
-    public JacksonJsonMapper snakeCaseJsonMapper(ObjectMapper objectMapper) {
-        ObjectMapper snakeCaseObjectMapper = snakeCaseObjectMapper(objectMapper);
-        return new JacksonJsonMapper(snakeCaseObjectMapper);
-    }
-
-    @Bean
-    public ObjectMapper snakeCaseObjectMapper(ObjectMapper objectMapper) {
-        ObjectMapper snakeCaseObjectMapper = objectMapper.copy();
-        snakeCaseObjectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        return snakeCaseObjectMapper;
     }
 
     @Configuration
@@ -80,7 +63,8 @@ public class JacksonAutoConfiguration {
 
             XmlMapper xmlMapper = builder.createXmlMapper(true).build();
             XmlFactory xmlFactory = xmlMapper.getFactory();
-            WstxOutputFactory xmlOutputFactory = (WstxOutputFactory) xmlFactory.getXMLOutputFactory();
+            WstxOutputFactory xmlOutputFactory = (WstxOutputFactory) xmlFactory
+                                                                             .getXMLOutputFactory();
             xmlOutputFactory.configureForSpeed();
 
             return xmlMapper;

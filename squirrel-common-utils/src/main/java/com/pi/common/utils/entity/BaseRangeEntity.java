@@ -1,6 +1,5 @@
 package com.pi.common.utils.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,7 +20,6 @@ public class BaseRangeEntity {
      */
     private String end;
 
-    @JsonIgnore
     public ZonedDateTime getStartTime() {
         ZonedDateTime startTime = StringUtils.isBlank(start)
                 ? ZonedDateTime.of(ZonedDateTime.now(ZoneOffset.UTC).toLocalDate(), LocalTime.MIN, ZoneOffset.UTC)
@@ -29,7 +27,6 @@ public class BaseRangeEntity {
         return startTime;
     }
 
-    @JsonIgnore
     public ZonedDateTime getEndTime() {
         ZonedDateTime endTime = StringUtils.isBlank(end)
                 ? ZonedDateTime.of(ZonedDateTime.now(ZoneOffset.UTC).toLocalDate(), LocalTime.MAX, ZoneOffset.UTC)
