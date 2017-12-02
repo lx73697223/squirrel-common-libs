@@ -26,7 +26,7 @@ public class LogMethodReturnIntercept {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(LogMethodReturnIntercept.class);
 
-    @Autowired
+    @Autowired(required = false)
     private JsonMapper jsonMapper;
 
     @Pointcut("@annotation(com.pi.common.utils.aop.annotation.LogMethodReturn)")
