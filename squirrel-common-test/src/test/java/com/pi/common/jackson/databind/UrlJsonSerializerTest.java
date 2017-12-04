@@ -1,10 +1,9 @@
-package com.pi.common.test.jackson.databind;
+package com.pi.common.jackson.databind;
 
 import com.pi.common.jackson.autoconfigure.PiJacksonAutoConfiguration;
-import com.pi.common.jackson.databind.LongJsonComponent;
-import com.pi.common.test.jackson.databind.entity.PiTestJsonComponentEntity;
-import com.pi.common.test.jackson.databind.entity.PiTestUrlJsonSerializer;
+import com.pi.common.jackson.databind.entity.PiTestJsonComponentEntity;
 import com.pi.common.utils.mapper.json.JsonMapper;
+import com.pi.common.jackson.databind.entity.PiTestUrlJsonSerializer;
 import com.pi.common.utils.spring.Profiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;

@@ -1,4 +1,4 @@
-package com.pi.common.test.jackson.databind.entity;
+package com.pi.common.jackson.databind.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;

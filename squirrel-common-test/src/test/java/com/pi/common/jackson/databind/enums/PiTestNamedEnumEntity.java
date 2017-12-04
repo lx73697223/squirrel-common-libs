@@ -1,4 +1,4 @@
-package com.pi.common.test.jackson.databind.enums;
+package com.pi.common.jackson.databind.enums;
 
 import com.pi.common.utils.enums.NamedEnumEntity;
 

@@ -1,7 +1,6 @@
-package com.pi.common.test.jackson.databind;
+package com.pi.common.jackson.databind;
 
 import com.pi.common.jackson.autoconfigure.PiJacksonAutoConfiguration;
-import com.pi.common.jackson.databind.LongJsonComponent;
 import com.pi.common.utils.mapper.json.JsonMapper;
 import com.pi.common.utils.spring.Profiles;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.pi.common.test.jackson.databind.entity;
+package com.pi.common.jackson.databind.entity;
 
 import com.pi.common.jackson.databind.UrlJsonSerializer;
 import org.springframework.boot.jackson.JsonComponent;
