@@ -1,4 +1,12 @@
-package com.pi.common.persistence.mybatis.typehandle;
+package com.pi.common.persistence.orm.mybatis.typehandle;
+
+import com.pi.common.utils.core.ReflectionUtils;
+import com.pi.common.utils.enums.EnumEntity;
+import com.pi.common.utils.enums.EnumEntityFactory;
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import java.lang.reflect.ParameterizedType;
 import java.sql.CallableStatement;
@@ -6,14 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-
-import com.pi.common.utils.enums.EnumEntity;
-import com.pi.common.utils.enums.EnumEntityFactory;
-import com.pi.common.utils.core.ReflectionUtils;
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandler;
-import org.apache.ibatis.type.TypeHandlerRegistry;
 
 public class EnumEntityTypeHandler<T extends EnumEntity<?>> extends BaseTypeHandler<T> {
 

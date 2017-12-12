@@ -1,4 +1,4 @@
-package com.pi.common.persistence.mybatis.typehandle;
+package com.pi.common.persistence.orm.mybatis.typehandle;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
