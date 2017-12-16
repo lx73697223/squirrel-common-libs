@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.pi.common.jackson.autoconfigure.PiJacksonAutoConfiguration;
 import com.pi.common.jackson.databind.enums.PiTestEnumEntity;
 import com.pi.common.jackson.databind.enums.PiTestNamedEnumEntity;
+import com.pi.common.utils.enums.EnumEntityFactory;
 import com.pi.common.utils.mapper.json.JsonMapper;
 import com.pi.common.utils.spring.Profiles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class EnumEntityJsonComponentTest extends AbstractTestNGSpringContextTest
 
     @Test
     public void serialize() {
-        com.pi.common.jackson.databind.enums.PiTestEnumEntity[] piTestEnumEntities = PiTestEnumEntity.values();
+        PiTestEnumEntity[] piTestEnumEntities = PiTestEnumEntity.values();
         String result = jsonMapper.toJson(piTestEnumEntities);
         assertThat(result).isEqualTo("[1,2,3]");
     }

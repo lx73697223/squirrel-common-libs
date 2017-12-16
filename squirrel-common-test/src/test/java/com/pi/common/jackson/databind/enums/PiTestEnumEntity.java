@@ -4,7 +4,9 @@ import com.pi.common.utils.enums.EnumEntity;
 
 public enum PiTestEnumEntity implements EnumEntity<Byte> {
 
-    ENUM_ONE(1), ENUM_TWO(2), ENUM_THREE(3);
+    ENUM_ONE(1),
+    ENUM_TWO(2),
+    ENUM_THREE(3);
 
     private byte value;
 
@@ -16,4 +18,5 @@ public enum PiTestEnumEntity implements EnumEntity<Byte> {
     public Byte getValue() {
         return value;
     }
+
 }

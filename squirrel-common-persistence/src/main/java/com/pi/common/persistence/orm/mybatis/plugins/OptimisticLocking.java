@@ -1,4 +1,4 @@
-package com.pi.common.persistence.mybatis.aop.annotations;
+package com.pi.common.persistence.orm.mybatis.plugins;
 
 import org.springframework.http.HttpStatus;
 

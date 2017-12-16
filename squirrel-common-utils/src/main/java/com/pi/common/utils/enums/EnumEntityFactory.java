@@ -1,14 +1,14 @@
 package com.pi.common.utils.enums;
 
+import com.google.common.collect.Maps;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.support.DefaultConversionService;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import com.google.common.collect.Maps;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.support.DefaultConversionService;
 
 public class EnumEntityFactory {
 
@@ -22,8 +22,8 @@ public class EnumEntityFactory {
             Map<Object, EnumEntity<?>> enumMap = Maps.newHashMapWithExpectedSize(enumConstants.length);
             for (EnumEntity<?> enumEntity : enumConstants) {
                 enumMap.put(enumEntity.getValue(), enumEntity);
-                if (!enumEntity.getAltLookupValue().equals(enumEntity.getValue())) {
-                    enumMap.put(enumEntity.getAltLookupValue(), enumEntity);
+                if (!enumEntity.getValue().equals(enumEntity.getValue())) {
+                    enumMap.put(enumEntity.getValue(), enumEntity);
                 }
             }
             return Collections.unmodifiableMap(enumMap);

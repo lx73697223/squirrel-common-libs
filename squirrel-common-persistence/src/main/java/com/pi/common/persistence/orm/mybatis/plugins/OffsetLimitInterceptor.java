@@ -1,6 +1,6 @@
-package com.pi.common.persistence.mybatis.plugins;
+package com.pi.common.persistence.orm.mybatis.plugins;
 
-import com.pi.common.persistence.mybatis.dialect.Dialect;
+import com.pi.common.persistence.orm.mybatis.dialect.Dialect;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;

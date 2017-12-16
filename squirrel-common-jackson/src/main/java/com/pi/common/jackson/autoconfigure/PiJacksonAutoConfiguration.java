@@ -26,7 +26,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 @ConfigurationProperties(prefix = "jackson")
 public class PiJacksonAutoConfiguration {
 
-    @Value("${jackson.enum-entity-packages}")
+    @Value("${jackson.enum-entity-packages:null}")
     private String[] enumEntityPackages;
 
     public void setEnumEntityPackages(String[] enumEntityPackages) {

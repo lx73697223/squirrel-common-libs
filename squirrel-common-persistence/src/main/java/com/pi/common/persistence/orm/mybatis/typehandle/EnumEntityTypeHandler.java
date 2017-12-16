@@ -1,62 +1,61 @@
 package com.pi.common.persistence.orm.mybatis.typehandle;
 
-import com.pi.common.utils.core.ReflectionUtils;
 import com.pi.common.utils.enums.EnumEntity;
 import com.pi.common.utils.enums.EnumEntityFactory;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeHandler;
-import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.apache.ibatis.type.MappedTypes;
 
-import java.lang.reflect.ParameterizedType;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
+@MappedTypes({EnumEntity.class})
 public class EnumEntityTypeHandler<T extends EnumEntity<?>> extends BaseTypeHandler<T> {
 
-    private final Map<Object, EnumEntity<?>> enumMap;
+    private Class<T> type;
 
-    private final TypeHandler<Object> typeHandler;
-
-    @SuppressWarnings("unchecked")
-    private EnumEntityTypeHandler(TypeHandlerRegistry typeHandlerRegistry, Class<T> enumEntityClass) {
-        this.enumMap = EnumEntityFactory.getEnumMap(enumEntityClass);
-        ParameterizedType interfaceType = ReflectionUtils.findSpecificGenericInterfaces(enumEntityClass);
-        Class<?> valueType = (Class<?>) interfaceType.getActualTypeArguments()[0];
-        this.typeHandler = (TypeHandler<Object>) typeHandlerRegistry.getTypeHandler(valueType);
+    public EnumEntityTypeHandler() {
     }
 
-    public static <T extends EnumEntity<?>> EnumEntityTypeHandler<T> create(TypeHandlerRegistry typeHandlerRegistry,
-            Class<T> enumClass) {
-        return new EnumEntityTypeHandler<>(typeHandlerRegistry, enumClass);
+    public EnumEntityTypeHandler(Class<T> type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type argument cannot be null");
+        }
+        this.type = type;
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
-        typeHandler.setParameter(ps, i, parameter.getValue(), jdbcType);
+    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType)
+            throws SQLException {
+        if (jdbcType == null) {
+            ps.setString(i, parameter.getValue().toString());
+        } else {
+            ps.setObject(i, parameter.getValue(), jdbcType.TYPE_CODE);
+        }
     }
 
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return convertResult(typeHandler.getResult(rs, columnName));
+        Object result = rs.getObject(columnName);
+        return getResult(type, result);
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return convertResult(typeHandler.getResult(rs, columnIndex));
+        Object result = rs.getObject(columnIndex);
+        return getResult(type, result);
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return convertResult(typeHandler.getResult(cs, columnIndex));
+        Object result = cs.getObject(columnIndex);
+        return getResult(type, result);
     }
 
-    @SuppressWarnings("unchecked")
-    private T convertResult(Object result) {
-        return result == null ? null : (T) enumMap.get(result);
+    private T getResult(Class<T> type, Object result) {
+        return result == null ? null : EnumEntityFactory.getUnchecked(type, result);
     }
 
 }

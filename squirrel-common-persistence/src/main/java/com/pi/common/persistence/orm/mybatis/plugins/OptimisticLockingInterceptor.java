@@ -1,6 +1,5 @@
-package com.pi.common.persistence.mybatis.plugins;
+package com.pi.common.persistence.orm.mybatis.plugins;
 
-import com.pi.common.persistence.mybatis.aop.annotations.OptimisticLocking;
 import com.pi.common.utils.exceptions.PiRuntimeException;
 import com.pi.common.utils.i18n.CrudCode;
 import org.apache.ibatis.executor.Executor;
