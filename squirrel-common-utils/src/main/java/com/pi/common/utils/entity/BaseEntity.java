@@ -8,11 +8,11 @@ import java.time.ZonedDateTime;
 @Data
 public class BaseEntity implements Serializable, LogicalDeletionEntity {
 
-    private Long createdBy;
+    private String createdBy;
 
     private ZonedDateTime createdTime;
 
-    private Long updatedBy;
+    private String updatedBy;
 
     private ZonedDateTime updatedTime;
 
@@ -23,4 +23,11 @@ public class BaseEntity implements Serializable, LogicalDeletionEntity {
         return deleted;
     }
 
+    public void setCreatedBy(Object id) {
+        this.createdBy = (id == null) ? null : id.toString();
+    }
+
+    public void setUpdatedBy(Object id) {
+        this.updatedBy = (id == null) ? null : id.toString();
+    }
 }

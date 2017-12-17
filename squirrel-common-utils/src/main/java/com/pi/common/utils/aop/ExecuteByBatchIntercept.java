@@ -29,8 +29,7 @@ public class ExecuteByBatchIntercept {
 
     @SuppressWarnings("unchecked")
     @Around(value = "pointCut()")
-    public Object doAround(ProceedingJoinPoint pjp)
-            throws Throwable {
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 
         Object[] args = pjp.getArgs();
         if (args == null || args.length == 0 || args[0] == null) {
@@ -91,8 +90,10 @@ public class ExecuteByBatchIntercept {
 
         LOGGER.info("ExecuteByBatch method:{}, listSize:{}, batchSize:{}.", method.getName(), listSize, batchSize);
 
-        return isCollectionTypeFinal == null ? null : (isCollectionTypeFinal ? list : list.stream().mapToLong(
-                n -> Long.parseLong(n.toString())).sum());
+        if (isCollectionTypeFinal == null){
+            return null;
+        }
+        return isCollectionTypeFinal ? list : list.stream().mapToLong(n -> Long.parseLong(n.toString())).sum();
     }
 
 }
