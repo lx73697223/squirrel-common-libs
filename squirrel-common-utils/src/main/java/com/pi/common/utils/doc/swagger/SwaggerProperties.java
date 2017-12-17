@@ -1,4 +1,4 @@
-package com.pi.common.autoconfigure.swagger;
+package com.pi.common.utils.doc.swagger;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = SwaggerProperties.PREFIX)
 public class SwaggerProperties {
 
-    public static final String PREFIX = "spring.swagger";
+    public static final String PREFIX = "swagger";
 
     private Boolean enable = true;
 

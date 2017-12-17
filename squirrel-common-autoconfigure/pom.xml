@@ -13,17 +13,6 @@
     <artifactId>squirrel-common-autoconfigure</artifactId>
 
     <dependencies>
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <optional>true</optional>
-        </dependency>
-
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>

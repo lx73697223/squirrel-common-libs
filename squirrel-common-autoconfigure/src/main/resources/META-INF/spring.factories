@@ -1,5 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pi.common.autoconfigure.swagger.SwaggerAutoConfiguration,\
 com.pi.common.autoconfigure.quartz.QuartzAutoConfiguration,\
 com.pi.common.autoconfigure.redis.RedisAutoConfiguration,\
 com.pi.common.autoconfigure.spring.context.MessageSourceAccessorAutoConfiguration,\

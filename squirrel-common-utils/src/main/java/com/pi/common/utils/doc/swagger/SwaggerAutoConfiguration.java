@@ -1,4 +1,4 @@
-package com.pi.common.autoconfigure.swagger;
+package com.pi.common.utils.doc.swagger;
 
 import com.google.common.base.Predicate;
 import org.apache.commons.lang3.StringUtils;
@@ -31,45 +31,51 @@ public class SwaggerAutoConfiguration {
     @Autowired
     private SwaggerProperties properties;
 
-    protected ApiInfo createApiInfo() {
-        return new ApiInfo(properties.getTitle(), properties.getDescription(), properties.getVersion(),
-                properties.getTermsOfServiceUrl(),
-                new Contact(properties.getContactName(), properties.getContactUrl(), properties.getContactEmail()),
-                properties.getLicense(), properties.getLicenseUrl());
+    @Bean
+    public Docket docket() {
+        return createDocket();
     }
 
     protected Docket createDocket() {
-        return createDocket(pathsRegex(properties.getRegexPath()), properties.getGroupName(), properties.getScanBasePackage(),
-                createApiInfo(), properties.getNeedToken(), properties.getEnable());
+        return createDocket(pathsRegex(properties.getRegexPath()), properties.getGroupName(),
+                            properties.getScanBasePackage(), createApiInfo(),
+                            properties.getNeedToken(), properties.getEnable());
     }
 
-    protected Docket createDocket(Predicate<String> pathsRegex, String groupName, String basePackage, ApiInfo apiInfo,
-            boolean isNeedToken, boolean enable) {
+    protected ApiInfo createApiInfo() {
+        return new ApiInfo(properties.getTitle(), properties.getDescription(),
+                           properties.getVersion(), properties.getTermsOfServiceUrl(),
+                           new Contact(properties.getContactName(), properties.getContactUrl(),
+                                       properties.getContactEmail()), properties.getLicense(),
+                           properties.getLicenseUrl());
+    }
+
+    protected Docket createDocket(Predicate<String> pathsRegex, String groupName,
+                                  String basePackage, ApiInfo apiInfo, boolean isNeedToken,
+                                  boolean enable) {
         Docket docket = new Docket(DocumentationType.SWAGGER_2).enable(enable);
         docket.genericModelSubstitutes(ResponseEntity.class).useDefaultResponseMessages(true);
         docket.groupName(groupName).apiInfo(apiInfo);
-        docket.select().apis(RequestHandlerSelectors.basePackage(basePackage)).paths(pathsRegex).build();
+        docket.select().apis(RequestHandlerSelectors.basePackage(basePackage)).paths(pathsRegex)
+              .build();
         if (isNeedToken) {
             docket.globalOperationParameters(getGlobalOperationParameters());
         }
         return docket;
     }
 
-    @Bean
-    public Docket docket() {
-        return createDocket();
-    }
-
     protected List<Parameter> getGlobalOperationParameters() {
         List<Parameter> list = new ArrayList<>();
         Parameter auth = new ParameterBuilder().name("Authorization").description("Authorization")
-                .modelRef(new ModelRef("string")).parameterType("header").defaultValue("Bearer ").required(true).build();
+                                               .modelRef(new ModelRef("string")).parameterType(
+                        "header").defaultValue("Bearer ").required(true).build();
         list.add(auth);
         return list;
     }
 
     protected Predicate<String> pathsRegex(String regexPath) {
-        return StringUtils.isBlank(regexPath) ? PathSelectors.any() : PathSelectors.regex(regexPath);
+        return StringUtils.isBlank(regexPath) ? PathSelectors.any() : PathSelectors.regex(
+                regexPath);
     }
 
 }
