@@ -1,13 +1,12 @@
 package com.pi.common.utils.core.sequence;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SnowflakeIdGenerator implements UniqueIdGenerator {
 
     /**
-     开始时间戳, 生成Id时使用这个值作为被减数
+     * 开始时间戳, 生成Id时使用这个值作为被减数
      */
     private final long TWEPOCH = 1513512626564L;
 
@@ -21,40 +20,26 @@ public class SnowflakeIdGenerator implements UniqueIdGenerator {
 
     private final int SEQUENCE_MASK = ~(-1 << SEQUENCE_BITS);
 
-    private final AtomicReference<Sequence> sequence = new AtomicReference<>();
+    private final AtomicReference<Sequence> SEQUENCE = new AtomicReference<>();
 
     private int instanceId;
 
-    public SnowflakeIdGenerator() {
-    }
-
     public SnowflakeIdGenerator(int instanceId) {
         this.instanceId = instanceId;
-    }
-
-    public void setInstanceId(int instanceId) {
-        this.instanceId = instanceId;
-    }
-
-    @PostConstruct
-    public void initialize() {
-        if (instanceId == 0) {
-            throw new RuntimeException("instanceId not set");
-        }
     }
 
     @Override
     public Long next() {
         Sequence currentSequence, nextSequence;
         do {
-            currentSequence = sequence.get();
+            currentSequence = SEQUENCE.get();
             long currentTimestamp = currentTimestamp();
 
             if (currentSequence != null && currentSequence.getTimestamp() >= currentTimestamp) {
                 if (currentSequence.getTimestamp() != currentTimestamp) {
-                    throw new RuntimeException(String.format(
-                            "Clock is moving backwards. Rejecting requests for %d milliseconds. instanceId:%d",
-                            currentSequence.getTimestamp() - currentTimestamp, this.instanceId));
+                    throw new RuntimeException(
+                            String.format("Clock is moving backwards. Rejecting requests for %d milliseconds. instanceId:%d",
+                                    currentSequence.getTimestamp() - currentTimestamp, this.instanceId));
                 }
 
                 int nextValue = currentSequence.getValue() + 1 & SEQUENCE_MASK;
@@ -65,7 +50,7 @@ public class SnowflakeIdGenerator implements UniqueIdGenerator {
             } else {
                 nextSequence = new SnowflakeIdGenerator.Sequence(0, currentTimestamp);
             }
-        } while (!sequence.compareAndSet(currentSequence, nextSequence));
+        } while (!SEQUENCE.compareAndSet(currentSequence, nextSequence));
 
         return nextSequence.getId();
     }
@@ -75,13 +60,12 @@ public class SnowflakeIdGenerator implements UniqueIdGenerator {
     }
 
     private long waitForNextTimestamp() {
-        while (currentTimestamp() <= sequence.get().getTimestamp()) {
+        while (currentTimestamp() <= SEQUENCE.get().getTimestamp()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
             }
         }
-
         return currentTimestamp();
     }
 
@@ -105,8 +89,7 @@ public class SnowflakeIdGenerator implements UniqueIdGenerator {
         }
 
         long getId() {
-            return ((timestamp - TWEPOCH) << TIMESTAMP_SHIFT) | (instanceId << INSTANCE_ID_SHIFT) |
-                   value;
+            return ((timestamp - TWEPOCH) << TIMESTAMP_SHIFT) | (instanceId << INSTANCE_ID_SHIFT) | value;
         }
     }
 
