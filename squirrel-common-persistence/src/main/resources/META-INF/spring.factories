@@ -1,2 +1,2 @@
-#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-#org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.pi.common.persistence.database.h2.H2ServerConfiguration
