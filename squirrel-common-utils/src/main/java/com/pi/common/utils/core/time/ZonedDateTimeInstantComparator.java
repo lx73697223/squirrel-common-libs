@@ -1,6 +1,5 @@
 package com.pi.common.utils.core.time;
 
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 
@@ -30,7 +29,7 @@ public class ZonedDateTimeInstantComparator implements Comparator<ZonedDateTime>
     public static int compareByTimeInstant(ZonedDateTime o1, ZonedDateTime o2) {
         if (o1 != null) {
             if (o2 != null) {
-                return o1.withZoneSameInstant(ZoneOffset.UTC).compareTo(o2.withZoneSameInstant(ZoneOffset.UTC));
+                return o1.withZoneSameInstant(TimeUtils.DEFAULT_ZONE).compareTo(o2.withZoneSameInstant(TimeUtils.DEFAULT_ZONE));
             } else {
                 return 1; // o1 != null and o2 == null
             }
