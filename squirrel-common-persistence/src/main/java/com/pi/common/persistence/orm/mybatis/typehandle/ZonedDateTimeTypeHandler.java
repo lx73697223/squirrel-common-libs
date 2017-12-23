@@ -6,11 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+
+import com.pi.common.utils.core.time.TimeUtils;
 
 public class ZonedDateTimeTypeHandler extends BaseTypeHandler<ZonedDateTime> {
 
@@ -42,6 +43,6 @@ public class ZonedDateTimeTypeHandler extends BaseTypeHandler<ZonedDateTime> {
     }
 
     private static ZonedDateTime getZonedDateTime(Timestamp timestamp) {
-        return timestamp == null ? null : timestamp.toLocalDateTime().atZone(ZoneOffset.UTC);
+        return TimeUtils.toZonedDateTime(timestamp);
     }
 }
