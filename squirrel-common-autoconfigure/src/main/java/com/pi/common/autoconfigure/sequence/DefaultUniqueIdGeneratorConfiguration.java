@@ -16,7 +16,7 @@ public class DefaultUniqueIdGeneratorConfiguration {
     private int instanceId;
 
     @Bean
-    @ConditionalOnProperty(prefix = "pi.sequence", name = "id-generator", havingValue = "snowflake")
+    @ConditionalOnProperty(prefix = "pi.sequence", name = "id-generator", havingValue = "snowflake", matchIfMissing = true)
     public UniqueIdGenerator snowflakeIdGenerator() {
         SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(instanceId);
         return idGenerator;
