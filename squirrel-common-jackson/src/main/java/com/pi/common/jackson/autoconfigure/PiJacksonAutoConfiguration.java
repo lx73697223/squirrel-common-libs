@@ -18,6 +18,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 
@@ -49,6 +50,7 @@ public class PiJacksonAutoConfiguration {
     }
 
     @Bean
+    @Primary
     public JacksonJsonMapper jsonMapper(ObjectMapper objectMapper) {
         return new JacksonJsonMapper(objectMapper);
     }
